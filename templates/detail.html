@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<div class="row">
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+
+        <!-- Title -->
+        <h2 class="mt-4">{{article.title}}</h2>
+
+        <!-- Author -->
+       
+          
+          <small>by, <a href="#">{{article.author}}</a></small>
+       
+
+        <hr>
+
+        <!-- Date/Time -->
+        
+        <small>{{article.created_date}}</small>
+
+        <hr>
+      {% if article.article_img %}
+      <img class="img-fluid rounded" src="{{article.article_img.url}}" alt="">
+        <hr>
+
+      {% else %}
+      {% endif %}
+       
+        
+        <!-- Post Content -->
+        <p class="lead">{{article.content|safe}}</p>
+
+       
+
+        
+        <hr>
+
+       
+
+       
+
+        
+        <div class="card my-4">
+          <h5 class="card-header">yorum ekle</h5>
+          <div class="card-body">
+            <form method="post" action="{% url 'article:comment' article.id %}">
+              {% csrf_token %}
+              <div class="form-group">
+                <textarea name="comment" class="form-control" rows="3"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">ekle</button>
+              <br>
+            </form>
+          </div>
+          
+        </div>
+        <h3>Yorumlar</h3>
+        <hr>
+        {% for comment in comments %}
+        <div class="media mb-4">
+          {% for imgs in img %}
+          {% if imgs.username.username == comment.user %}
+           <img width="45" height="60" class="d-flex mr-3 rounded-circle" src="{{imgs.user_img.url}}" alt="">
+      
+          {% else %}
+          
+          {% endif %}
+          
+          {% endfor %}
+         
+          <div class="media-body">
+            <h5 class="mt-0">{{comment.user}}</h5>
+            <div>{{comment.comment}}</div>
+            <small style="color: #ccc;">{{comment.date}}</small>
+            
+          </div>
+          </div>
+          <br>
+        {% endfor %}
+      
+        
+
+        
+        </div>
+
+      </div>
+
+    </div>
+{% endblock body %}

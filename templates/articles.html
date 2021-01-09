@@ -1,0 +1,136 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{% if articles %}
+  <div class="col-md-7" style="margin-left:180px;">
+                  <h1>Makaleler</h1>
+                 
+<form>
+ {% csrf_token %}
+ <input type="text" name="keyword" class=" input" maxlength="64" placeholder="Ara...">
+<button type="submit" class="btn btn-primary ">Ara</button></form>
+</div>
+       
+<table>
+
+                 {% for article in articles %}
+                  <div class="col-md-7" style="margin-left:180px;">
+                  <hr>
+        
+<a href="{% url 'article:detail' article.id %}" style="color: #000000;text-transform: uppercase;"><h2>{{article.title}}</h2></a>
+                     
+                     {% if article.article_img %}
+                     <a href="{% url 'article:detail' article.id %}"><img src="{{article.article_img.url}}" style="width:220px;height: 160px" alt="post img" class="pull-left img-responsive thumb margin10 img-thumbnail"></a>
+                      
+                     {% else %}
+                     {% endif %}
+                   <article><p>
+                        {{article.content|safe|truncatewords:60}}
+                         </p></article>
+                   
+                    
+                     
+                        
+                     
+                </div>
+                  <div class="col-md-7" style="margin-left:180px;">
+  <a  href="{% url 'article:detail' article.id %}" class="button"
+  >devamını gör</a><br><br>
+</div>
+
+               
+                 {% endfor %}
+           
+                 
+                 
+               
+
+</table>
+{% else %}
+<div class="alert alert-danger">Makale bulunamadı...</div>
+
+{% endif %}
+
+	
+       
+<style>
+.button:hover {
+
+ background-color: #438e46; /*Carrot*/
+
+ color: white;
+}
+.button {
+
+ -webkit-transition-duration: 0.2s; /* Safari */
+
+ transition-duration: 0.2s;
+}
+
+.button {
+background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 8px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-bottom: 80px;
+  float: right;
+
+}
+
+
+.blogShort{ border-bottom:1px solid #ddd;
+
+.add{background: #333; padding: 10%; height: 300px;}
+
+.nav-sidebar { 
+    width: 100%;
+    padding: 8px 0; 
+    border-right: 1px solid #ddd;
+}
+.nav-sidebar a {
+    color: #333;
+    -webkit-transition: all 0.08s linear;
+    -moz-transition: all 0.08s linear;
+    -o-transition: all 0.08s linear;
+    transition: all 0.08s linear;
+}
+.nav-sidebar .active a { 
+    cursor: default;
+    background-color: #34ca78; 
+    color: #fff; 
+}
+.nav-sidebar .active a:hover {
+    background-color: #37D980;   
+}
+.nav-sidebar .text-overflow a,
+.nav-sidebar .text-overflow .media-body {
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis; 
+}
+
+.btn-blog {
+    color: #ffffff;
+    background-color: #37d980;
+    border-color: #37d980;
+    border-radius: 0;
+    margin-bottom: 10px;
+}
+.btn-blog:hover,
+.btn-blog:focus,
+.btn-blog:active,
+.btn-blog.active,
+.open .dropdown-toggle.btn-blog {
+    color: white;
+    background-color:#34ca78;
+    border-color: #34ca78;
+}
+ h2{color:#34ca78;}
+ .margin10{margin-bottom:10px; margin-right:10px;}
+</style>
+{% endblock body %}
